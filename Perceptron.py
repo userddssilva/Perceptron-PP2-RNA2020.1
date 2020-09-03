@@ -61,11 +61,11 @@ def main():
 
     print(perceptron.weights)
 
-    inputs = np.array([1, 1])
+    #inputs = np.array([1, 1])
     #perceptron.predict(inputs) 
     #=> 1
 
-    inputs = np.array([0, 1])
+    #inputs = np.array([0, 1])
     #perceptron.predict(inputs) 
     #=> 0
 
