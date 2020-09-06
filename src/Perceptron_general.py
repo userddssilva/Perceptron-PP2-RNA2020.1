@@ -2,7 +2,10 @@
 @Author: Jonatas Travessa
 @Date: 06/09/2020
 """
+
+
 import numpy as np
+
 
 class Perceptron_general(object):
     def __init__(self, theta, learning_rate, bias):
@@ -10,6 +13,8 @@ class Perceptron_general(object):
         self.learning_rate = learning_rate
         self.bias = bias
         self.weights = np.array([0.0, 0.0, 0.0])
+        self.weights_adjusts = 0
+        self.epochs = 0
         
 
     def __calc_sum(self, weights, example):
@@ -33,14 +38,13 @@ class Perceptron_general(object):
         return self.weights
 
 
-    def fit(self, data):
-        epochs = 0
+    # função para ser usada na parte 1
+    def fitParte1(self, data):
         u = 0
-        adjust_total = 0
         erros_in_epoch = 1000
 
         while (erros_in_epoch != 0):
-            epochs += 1
+            self.epochs += 1
             adjust_in_epoch = 0
             erros_in_epoch = 0
             
@@ -51,8 +55,8 @@ class Perceptron_general(object):
                 
                 if  fu != example[2]:
                     adjust_in_epoch += 1
-                    adjust_total += 1
                     erros_in_epoch += 1
+                    self.weights_adjusts += 1
 
                     self.weights = self.__weight_adjust(self.weights, example, fu)
                     self.weights = np.round(self.weights, 4)
@@ -62,13 +66,53 @@ class Perceptron_general(object):
                     print(self.weights)
                     print("")
                     
-            print("Número de ajustes do vetor de pesos na época", epochs, ":", adjust_in_epoch)
+            print("Número de ajustes do vetor de pesos na época", self.epochs, ":", adjust_in_epoch)
             print("")
             
-        print("Número total de ajustes do vetor de pesos:", adjust_total)
+        print("Número total de ajustes do vetor de pesos:", self.weights_adjusts)
 
+
+    # função para ser usada na parte 2
+    def fitParte2(self, data):
+        u = 0
+        erros_in_epoch = 1000
+
+        while (erros_in_epoch != 0):
+            self.epochs += 1
+            adjust_in_epoch = 0
+            erros_in_epoch = 0
+            
+            for example in data:
+            
+                u = self.__calc_sum(self.weights, example)
+                fu = self.__activ_step_function(u)
+                
+                if  fu != example[2]:
+                    adjust_in_epoch += 1
+                    erros_in_epoch += 1
+                    self.weights_adjusts += 1
+
+                    self.weights = self.__weight_adjust(self.weights, example, fu)
+                    self.weights = np.round(self.weights, 4)
+
+                
     def getWeights(self):
         return self.weights
+
+
+    def getEpochs(self):
+        return self.epochs
+    
+
+    def getWeightsAdjusts(self):
+        return self.weights_adjusts
+
+    
+    def reset(self):
+        self.weights = np.array([0.0, 0.0, 0.0])
+        self.weights_adjusts = 0
+        self.epochs = 0
+
         
     
     
