@@ -53,9 +53,10 @@ class Perceptron(object):
             print("Pesos:", self.weights)
             print("Quantidade de Ajustes:", count_adjust)
             no_erro = True
-            
+
             # Randomizando os dados de treino
-            index = np.random.shuffle(np.arange(len(x_train)))
+            index = np.arange(len(x_train))
+            np.random.shuffle(index)
             x_train = x_train[index]
             y_train = y_train[index]
             #---------------------------------
@@ -63,6 +64,7 @@ class Perceptron(object):
             for x, y in zip(x_train, y_train):
                 u = np.sum(np.dot(x, self.weights))
                 y_predicto = self.__activ_func(u)
+                #print(y_predicto, y)
                 if self.__error(y_predicto, y):
                     self.__weight_adjust(x, y_predicto, y)
                     no_erro = False
