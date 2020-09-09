@@ -5,10 +5,10 @@
 import numpy as np
 
 class Perceptron(object):
-    def __init__(self, no_of_inputs, epoch=100, learning_rate=0.01, baias=-1):
+    def __init__(self, no_of_inputs, epoch=100, learning_rate=np.random.uniform(0.1, 0.4, 1), baias=-1):
         self.epoch = epoch
-        self.learning_rate = learning_rate
-        self.weights = np.random.random(no_of_inputs + 1)
+        self.learning_rate= learning_rate
+        self.weights = np.random.uniform(-0.5, 0.5, no_of_inputs + 1)
         self.baias = baias
     
     def __add_baias(self, inputs):
