@@ -13,7 +13,7 @@ class Perceptron(object):
                     baias=-1, 
                     random_train_set=False, 
                     show_training=False,
-                    weights=(0.0, 1.0,),
+                    weights=(0.0, 1.0),
                     use_epoch=False):
         self.epoch = epoch
         self.learning_rate= learning_rate
