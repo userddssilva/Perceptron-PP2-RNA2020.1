@@ -5,12 +5,20 @@
 import numpy as np
 
 class Perceptron(object):
-    def __init__(self, no_of_inputs, epoch=100, learning_rate=np.random.uniform(0.1, 0.4, 1), baias=-1, random_train_set=False):
+    
+    #TODO: create class documentation
+
+    def __init__(self, no_of_inputs, epoch=100, 
+                    learning_rate=np.random.uniform(0.1, 0.4, 1), 
+                    baias=-1, 
+                    random_train_set=False, 
+                    show_training=False):
         self.epoch = epoch
         self.learning_rate= learning_rate
         self.weights = np.random.uniform(-0.5, 0.5, no_of_inputs + 1)
         self.baias = baias
         self.random_train_set = random_train_set
+        self.show_training = show_training
     
     def __add_baias(self, inputs):
         new_inputs = []
@@ -21,7 +29,7 @@ class Perceptron(object):
 
     def __weight_adjust(self, x_train, y_predicto, y_real):
         erro = y_predicto - y_real
-        self.weights = self.weights - self.learning_rate * erro * x_train
+        self.weights -= self.learning_rate * erro * x_train
 
     def __activ_func(self, u): 
         if u >= 0.0:
@@ -53,29 +61,52 @@ class Perceptron(object):
             y_predicto.append(y)
         return np.array(y_predicto)
 
-    def fit(self, x_train, y_train):
+    def __show_training(self, epoch, count_adjust):
+        print("\n\tÉpoca:", epoch)
+        print("Pesos:", self.weights)
+        print("Quantidade de Ajustes:", count_adjust)
+
+    def __learning(self, x_train, y_train, no_erro, count_adjust):
+        for x, y in zip(x_train, y_train):
+            u = np.sum(np.dot(x, self.weights))
+            y_predicto = self.__activ_func(u)
+            if self.__error(y_predicto, y):
+                self.__weight_adjust(x, y_predicto, y)
+                no_erro = False
+                count_adjust += 1
+        return no_erro, count_adjust
+
+
+    def __epochs(self, x_train, y_train):
         no_erro = False
         epoch = 1
-        count_adjust = 0
-        x_train = self.__add_baias(x_train)
+        total_adjust = 0
         while no_erro != True and epoch != self.epoch:
-            print("\n\tÉpoca:", epoch)
-            print("Pesos:", self.weights)
-            print("Quantidade de Ajustes:", count_adjust)
-            no_erro = True
 
             if self.random_train_set:
-                x_train, y_train = self.__random_sets(x_train, y_train)
+                x_train, y_train = self.__random_sets(x_train,
+                                                         y_train)
+            
+            no_erro = True
+            count_adjust = 0
+            no_erro, count_adjust = self.__learning(x_train, 
+                                                        y_train, 
+                                                        no_erro, 
+                                                        count_adjust)
 
-            for x, y in zip(x_train, y_train):
-                u = np.sum(np.dot(x, self.weights))
-                y_predicto = self.__activ_func(u)
-                #print(y_predicto, y)
-                if self.__error(y_predicto, y):
-                    self.__weight_adjust(x, y_predicto, y)
-                    no_erro = False
-                    count_adjust += 1
+            if self.show_training:
+                self.__show_training(epoch, count_adjust)
+
             epoch += 1
-        print("\n\nQuantidade total de épocas:", epoch)
-        print("Quantidade total de ajustes:", count_adjust)
+            total_adjust += count_adjust
+        return epoch, total_adjust
+
+
+    def fit(self, x_train, y_train):
+
+        x_train = self.__add_baias(x_train)
+        epoch, total_adjust = self.__epochs(x_train, y_train)
+
+        print("\nQuantidade total de épocas:", epoch)
+        print("Quantidade total de ajustes:", total_adjust)
         print("Vetor final de pesos:", self.weights)
