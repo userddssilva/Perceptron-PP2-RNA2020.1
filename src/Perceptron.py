@@ -12,13 +12,18 @@ class Perceptron(object):
                     learning_rate=np.random.uniform(0.1, 0.4, 1), 
                     baias=-1, 
                     random_train_set=False, 
-                    show_training=False):
+                    show_training=False,
+                    weights=(0.0, 1.0,),
+                    use_epoch=False):
         self.epoch = epoch
         self.learning_rate= learning_rate
-        self.weights = np.random.uniform(-0.5, 0.5, no_of_inputs + 1)
+        self.weights = np.random.uniform(weights[0], 
+                                            weights[1], 
+                                            no_of_inputs + 1)
         self.baias = baias
         self.random_train_set = random_train_set
         self.show_training = show_training
+        self.use_epoch = use_epoch
     
     def __add_baias(self, inputs):
         new_inputs = []
@@ -66,7 +71,8 @@ class Perceptron(object):
         print("Pesos:", self.weights)
         print("Quantidade de Ajustes:", count_adjust)
 
-    def __learning(self, x_train, y_train, no_erro, count_adjust):
+    def __learning(self, x_train, y_train, no_erro):
+        count_adjust = 0
         for x, y in zip(x_train, y_train):
             u = np.sum(np.dot(x, self.weights))
             y_predicto = self.__activ_func(u)
@@ -81,18 +87,21 @@ class Perceptron(object):
         no_erro = False
         epoch = 1
         total_adjust = 0
-        while no_erro != True and epoch != self.epoch:
+        while no_erro != True:
 
+            if self.use_epoch:
+                if epoch == self.epoch:
+                    break
+                
             if self.random_train_set:
                 x_train, y_train = self.__random_sets(x_train,
                                                          y_train)
             
             no_erro = True
-            count_adjust = 0
+            
             no_erro, count_adjust = self.__learning(x_train, 
-                                                        y_train, 
-                                                        no_erro, 
-                                                        count_adjust)
+                                                        y_train,
+                                                        no_erro)
 
             if self.show_training:
                 self.__show_training(epoch, count_adjust)
@@ -110,3 +119,4 @@ class Perceptron(object):
         print("\nQuantidade total de épocas:", epoch)
         print("Quantidade total de ajustes:", total_adjust)
         print("Vetor final de pesos:", self.weights)
+        return epoch, total_adjust
