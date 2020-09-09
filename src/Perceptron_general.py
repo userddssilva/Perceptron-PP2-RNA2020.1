@@ -1,6 +1,6 @@
 """
 @Author: Jonatas Travessa
-@Date: 06/09/2020
+@Date: 07/09/2020
 """
 
 
@@ -38,42 +38,8 @@ class Perceptron_general(object):
         return self.weights
 
 
-    # função para ser usada na parte 1
-    def fitParte1(self, data):
-        u = 0
-        erros_in_epoch = 1000
-
-        while (erros_in_epoch != 0):
-            self.epochs += 1
-            adjust_in_epoch = 0
-            erros_in_epoch = 0
-            
-            for example in data:
-            
-                u = self.__calc_sum(self.weights, example)
-                fu = self.__activ_step_function(u)
-                
-                if  fu != example[2]:
-                    adjust_in_epoch += 1
-                    erros_in_epoch += 1
-                    self.weights_adjusts += 1
-
-                    self.weights = self.__weight_adjust(self.weights, example, fu)
-                    self.weights = np.round(self.weights, 4)
-
-                    print("Vetor de pesos ajustado, novo vetor de pesos")
-                    np.set_printoptions(precision=4, suppress=True)
-                    print(self.weights)
-                    print("")
-                    
-            print("Número de ajustes do vetor de pesos na época", self.epochs, ":", adjust_in_epoch)
-            print("")
-            
-        print("Número total de ajustes do vetor de pesos:", self.weights_adjusts)
-
-
-    # função para ser usada na parte 2
-    def fitParte2(self, data):
+    # função implementada para ser usada na parte 2
+    def fit2(self, data):
         u = 0
         erros_in_epoch = 1000
 
@@ -114,6 +80,3 @@ class Perceptron_general(object):
         self.epochs = 0
 
         
-    
-    
-    
