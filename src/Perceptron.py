@@ -35,6 +35,7 @@ class Perceptron(object):
     def __weight_adjust(self, x_train, y_predicto, y_real):
         erro = y_predicto - y_real
         self.weights -= self.learning_rate * erro * x_train
+        self.weights = np.round(self.weights, 4)
 
     def __activ_func(self, u): 
         if u >= 0.0:
