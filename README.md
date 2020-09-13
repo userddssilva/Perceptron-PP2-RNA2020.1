@@ -1,9 +1,9 @@
 # Uso do perceptro de Rosenblatt em problemas de classificação (PP2-RNA2020.1)
 > Este é um trabalho prático da disciplina de Redes Neurais Artificiais
 
-O trabalho implementa o algortimo de treinamento do perceptron e faz uso dele em problemas de classificações nos conjuntos de dados abaixo:
+O trabalho implementa o algortimo de treinamento do perceptron e faz uso dele em problemas de classificações nos conjuntos de dados do repositório:
 
-![](..images/datasets.png)
+![](../s/datasets.png)
 
 ## Como instalar as bibliotecas usadas no trabalho
 
