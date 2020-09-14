@@ -116,8 +116,10 @@ class Perceptron(object):
 
         x_train = self.__add_baias(x_train)
         epoch, total_adjust = self.__epochs(x_train, y_train)
-
+        
         print("\nQuantidade total de épocas:", epoch)
         print("Quantidade total de ajustes:", total_adjust)
-        print("Vetor final de pesos:", self.weights)
+        
+        np.set_printoptions(precision=4, suppress=True)
+        print("Vetor final de pesos:", np.round(self.weights, 4))
         return epoch, total_adjust
