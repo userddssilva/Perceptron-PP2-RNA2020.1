@@ -1,12 +1,108 @@
 """
 @Author: Dayvson Silva
+@Email: ddss.snf19@uea.edu.br
 @Date: 06/09/2020
 """
 import numpy as np
 
+np.arange()
+
 class Perceptron(object):
     
-    #TODO: create class documentation
+    """
+    Esta classe é a implementação do perceptron de Rosenblatt, ela
+    implementa o algoritmo de treinamento em seus métodos, assim como
+    um método para testar os pesos encontrados no treinamento. 
+
+    Attributes
+    ----------
+    no_of_inputs: int 
+        Quantidade de entradas no perceptron.
+    epoch: int 
+        Quantidade de épocas que o perceptron vai usar para treino.
+    learning_rate: float
+        Taxa de aprendizado, usado no cálculo do ajuste de pesos. O
+        padrão é um valor aleatório distribuido uniformemente entre
+        0.1 e 0.4.
+    baias: float
+        Baias do perceptron. O padrão é -1.
+    rando_train_test: bool
+        Usada quando se deseja randomizar em cada época o conjunto 
+        de treinamento. O padrão é False.
+    show_training: bool
+        Quando igual a True mostra em cada época o conjunto de pesos
+        encontrado.
+    weights: list or tuple
+        Recebe dois valores em formato de iterável representando o 
+        inicio e o fim do intervalo de geração dos pesos.
+    use_epoch: bool
+        Usada para indicar que o treinamento deve usar uma quantidade
+        limitada de épocas definidas no parâmentro epoch.
+
+
+    Methods
+    -------
+    __init__(self, no_of_inputs, epoch=100, 
+                    learning_rate=np.random.uniform(0.1, 0.4, 1), 
+                    baias=-1, 
+                    random_train_set=False, 
+                    show_training=False,
+                    weights=(-5.0, 0.5),
+                    use_epoch=False)
+        Construtor da classe, inicializa os atributos usados no percetron
+
+    __add_baias(self, inputs)
+        Usado para adicionar o baias ao conjunto de treino. Recebe um
+        conjunto de treinamento sem os atributo alvo e retorna o  
+        conjunto de treino com um baias para cada exemplo do conjunto.
+    
+    __weight_adjust(self, x_train, y_predicto, y_real)
+        Metodo usado para calcular os novos pesos do treinamento. Recebe
+        um exemplo do conjunto de treino o seu atributo alvo e o valor 
+        predito, calcula os novos pesos e retorna os pesos ajustados.
+    
+    __activ_func(self, u)
+        Função de ativação do perceptron, nesse caso a função degrau. 
+        Recebe o valor do somatório da multiplicação dos pesos e retorna
+        0 ou 1.
+
+    __error(self, y_predicto, y_real)
+        Usada para identificar se o valor do atributo alvo de um exemplo 
+        é igual ao valor predito para este exemplo, recebe ambos os valores
+        e retorna True caso os valores sejam diferentes ou False caso
+        contrário.
+
+    __random_sets(self, x_train, y_train)
+        Método para randomizar os exemplos de treino, usando quando o atributo
+        rando_train_test é True, rebece o conjunto de treino e seus respectivos
+        atritubutos alvos e retorna os mesmo conjunto com os exemplos 
+        randomizados.
+    
+    __show_training(self, epoch, count_adjust)
+        Mostra o época de treinamento e a quantidades de ajustes dessa época
+        usada quando o atributo show_training é True.
+    
+    __learning(self, x_train, y_train, no_erro)
+        Separa cada exemplo do conjunto de treino junta com o seu atributo alvo
+        e prediz o valor de atributo alvo, verifica se tem erro e atualiza os 
+        pesos em caso afirmativo.
+    
+    __epochs(self, x_train, y_train)
+        É reponsável por chamar o metodo de aprendizagem, mostrar treino e 
+        randonmizar os dados de treino, recebe os conjuntos de treino e retorna
+        o número de épocas usadas no treino e quantidade de ajustes nos pesos
+        durante o treino.
+
+    fit(self, x_train, y_train)
+        Chama o método __epochs para iniciar o treinamento recebe os conjuntos
+        de treino e retorna o número de épocas usadas no treino e quantidade de
+        ajustes nos pesos durante o treino.
+
+    predict(self, x_test)
+        Usado para predizer os valores dos atributos alvos de um conjunto de
+        teste usando os pesos encontrados no treinamento. Recebe um conjunto de
+        treino e retorna os valores de atributos alvos preditos.
+    """
 
     def __init__(self, no_of_inputs, epoch=100, 
                     learning_rate=np.random.uniform(0.1, 0.4, 1), 
