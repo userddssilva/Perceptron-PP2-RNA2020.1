@@ -1,11 +1,9 @@
 """
-@Author: Dayvson Silva
-@Email: ddss.snf19@uea.edu.br
+@Author: Dayvson Silva, Jonatas Barros
+@Email: ddss.snf19@uea.edu.br, jtsdb.snf19@uea.edu.br
 @Date: 06/09/2020
 """
 import numpy as np
-
-np.arange()
 
 class Perceptron(object):
     
