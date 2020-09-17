@@ -10,7 +10,7 @@ O trabalho implementa o algortimo de treinamento do perceptron e faz uso dele em
 Com o pip
 
 ```
-pip install -r requirementes.txt
+pip install -r requirements.txt
 ```
 
 ## Contributing
